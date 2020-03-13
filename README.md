@@ -13,10 +13,11 @@ There are a few ways to do the sentiment analysis exercise using R/Python.
 3. **Amit Ojha**: Works as Senior Data Scientist
 ---
 
-## About Team Members
+## About Growth-Consulting(GC) Team
 
-1. **Bhati Sharma**: Works as Data Scientist with having 4 years of Experience
-2. **Christina Paul**: An Intern working for this Project for a period of 3-months.
+1. **Sam Whately**
+2. **Philip Crean**
+3. **Taimur Khan**
 
 
 ---

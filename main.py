@@ -19,6 +19,8 @@ import subprocess
 import signal
 import warnings
 from nltk.corpus import stopwords
+import urllib
+import easygui
 
 warnings.filterwarnings("ignore")
 
@@ -31,6 +33,7 @@ import spacy
 from spacy_langdetect import LanguageDetector
 from pycorenlp import StanfordCoreNLP
 import stanfordnlp
+
 
 """
 Custom Libraries
@@ -69,13 +72,19 @@ def main():
         if inputoption not in options:
             print("Please enter the option as either 0 or 1")
             raise SystemExit(sys.exit(1))
-    #phases - Get the rerun status from user        
-    Rerun = int(input("Enter the Re run status 0/1: "))
-    checkInputStatus(Rerun)
+        return 1
+
+    #phases - Get the rerun status from user
+    external_data_flag = int(input("Want to upload the data externally?: "))
+    checkInputStatus(external_data_flag)
+    rerun = int(input("Enter the Re-run status 0/1: "))
+    checkInputStatus(rerun)
     #phases - Get the processing options status    
     print("\n---------------- Enter the processing options ---------------- ")
-    scrape = int(input("\nDo you want to process Scraping 0/1: "))
-    checkInputStatus(scrape)
+    scrape = None
+    if external_data_flag != 1:
+        scrape = int(input("\nDo you want to process Scraping 0/1: "))
+        checkInputStatus(scrape)
     preproc = int(input("\nDo you want to process Pre processing  0/1: "))
     checkInputStatus(preproc)
     feature = int(input("\nDo you want to process Feature Extraction 0/1: "))
@@ -85,13 +94,16 @@ def main():
     visual = int(input("\nDo you want to process Visualization 0/1: "))
     checkInputStatus(visual)
     
-    #phases - Validate the processing options status    
-    processoption=str(scrape)+str(preproc)+str(feature)+str(clustering)+str(visual)
+    #phases - Validate the processing options status
+    if external_data_flag != 1:
+        processoption=str(scrape)+str(preproc)+str(feature)+str(clustering)+str(visual)
+    else:
+        processoption = str(preproc) + str(feature) + str(clustering) + str(visual)
 
     if processoption in ['00000']:
         print("\n Not proceeding with any processing------------ END ")
         raise SystemExit(sys.exit(1))
-    if processoption in ['11111'] and Rerun in [1]:
+    if processoption in ['11111'] and rerun in [1]:
         print("\n As rerun option is 1, cannot execute all processing------------ END ")
         raise SystemExit(sys.exit(1))
     
@@ -100,48 +112,51 @@ def main():
         logger.info("Total elapsed time: {0}".format(time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))))
         logger.info("End...!!!")
         raise SystemExit(sys.exit(1))
-    
-    
 
     config = config_ini()
 
     """
     Pre-requisites
     """
+    global keyword, data_tw_post, tw_data_pped, nlp_server, tw_data_emotions, tw_data_clustering
     driver = None
     if not source == "twitter":
-        driver = webdriver.Chrome(executable_path=config['PATHS']['CHROME_DRIVER'])
-    demoji.download_codes()
+        if external_data_flag != 1:
+            driver = webdriver.Chrome(executable_path=config['PATHS']['CHROME_DRIVER'])
+        demoji.download_codes()
 
-    stanfordnlp_loc = config['PATHS']['STANFORD_NLPSERVER'] + "\\"
+    stanfordnlp_loc = config['PATHS']['SUPPORTING_FILES'] + '\\stanford-corenlp-full-2018-10-05' +"\\"
     cmd = "java -mx4g -cp " + '"*"' + " edu.stanford.nlp.pipeline.StanfordCoreNLPServer"
-    nlp_server = subprocess.Popen(cmd, cwd=stanfordnlp_loc)
 
-    spacy_nlp = spacy.load(config['PATHS']['SPACY_NLP'] + "\\en_core_web_sm\\en_core_web_sm-2.2.5\\")
+    nlp_server = subprocess.Popen(cmd, cwd=stanfordnlp_loc)
+    spacy_nlp = spacy.load('en_core_web_sm')
     spacy_nlp.add_pipe(LanguageDetector(), name="language_detector", last=True)
     sentiment_nlp = StanfordCoreNLP('http://localhost:9000')
-    nlp = stanfordnlp.Pipeline()
+    if not os.path.isdir(config['PATHS']['SUPPORTING_FILES'] + '\\en_ewt_models'):
+        stanfordnlp.download('en', resource_dir=config['PATHS']['SUPPORTING_FILES'])
+    nlp = stanfordnlp.Pipeline(models_dir=config['PATHS']['SUPPORTING_FILES'])
 
     if source == "twitter":
         try:
             """
             Data Scrapping
             """
-            keyword = input("Enter the Keyword: ")
-            if scrape in [1]:
-                pages = input("Enter the no. of Pages: ")
-                logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
-                data_tw, keyword = twscraper.tw_scraper(keyword, pages)
-                
-                data_tw_post = pd.DataFrame(data_tw)
-                data_tw_post['keyword'] = keyword
+            if external_data_flag != 1:
+                keyword = input("Enter the Keyword: ")
+                if scrape in [1]:
+                    pages = input("Enter the no. of Pages: ")
+                    logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
+                    data_tw, keyword = twscraper.tw_scraper(keyword, pages)
+                    
+                    data_tw_post = pd.DataFrame(data_tw)
+                    data_tw_post['keyword'] = keyword
 
-                logger.info("Exporting Scraped data as .csv into Output path. Please wait...!!!")
-                data_tw_post.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\tw_input_data_" + keyword + ".csv",
-                                    index=False)
-                logger.info("--------------------- Scraping is Completed...!!! -------------------------")
-                if processoption in ['10000']:
-                    endprocess()
+                    logger.info("Exporting Scraped data as .csv into Output path. Please wait...!!!")
+                    data_tw_post.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\tw_input_data_" + keyword + ".csv",
+                                        index=False)
+                    logger.info("--------------------- Scraping is Completed...!!! -------------------------")
+                    if processoption in ['10000']:
+                        endprocess()
                 
             """
             Data Pre-Processing
@@ -150,12 +165,18 @@ def main():
                 logger.info("------------- Data Pre-processing is Initiated. Please wait...!!! ---------")
                 if scrape not in [1]:
                     try:
-                        data_tw_post=pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\tw_input_data_" + keyword + ".csv")
+                        if external_data_flag != 1:
+                            data_tw_post=pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\tw_input_data_" + keyword + ".csv")
+                        else:
+                            keyword = input("Enter the Keyword: ")
+                            file_upload = easygui.fileopenbox()
+                            data_tw_post = pd.read_csv(file_upload)
                     except Exception as e:
                         print("\n Scraping output file is not available at the mentioned path")
                         logger.error("Exception: {}".format(e))
                 tw_data_pp = preprocReviews.twitterPreProcess(data_tw_post, spacy_nlp)
                 tw_data_pped = preprocReviews.create_final_input(tw_data_pp, demoji)
+
                 logger.info("Exporting Preprocessing data as .csv into Output path. Please wait...!!!")
                 tw_data_pped.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\tw_data_preprocessed_" + keyword + ".csv",
                                 index=False)
@@ -275,6 +296,7 @@ def main():
                 logger.info("End...!!!")
 
         except Exception as e:
+            nlp_server.kill()
             logger.error("Exception: {}".format(e))
 
     elif source == "facebook":
@@ -282,44 +304,45 @@ def main():
             """
             Data Scrapping
             """
-            keyword = input("Enter the Keyword: ")
-            if scrape in [1]:
-                pages = input("Enter the no. of Pages: ")
-                logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
-                data_fb, keyword = fbscraper.fb_scraper(keyword, pages)
+            if external_data_flag != 1:
+                keyword = input("Enter the Keyword: ")
+                if scrape in [1]:
+                    pages = input("Enter the no. of Pages: ")
+                    logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
+                    data_fb, keyword = fbscraper.fb_scraper(keyword, pages)
 
-                data_fb_post = pd.DataFrame(data_fb)
-                data_fb_post['keyword'] = keyword
+                    data_fb_post = pd.DataFrame(data_fb)
+                    data_fb_post['keyword'] = keyword
 
-                time.sleep(2)
-                fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
+                    time.sleep(2)
+                    fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
 
-                driver.get(fbpostforlogin)
-                LogInButton = driver.find_element_by_xpath("//a[@role = 'button']")
-                LogInButton.click()
-                username = driver.find_element_by_id("m_login_email")
-                username.clear()
-                username.send_keys(int(config['FB_LOGINS']['CONTACTNO']))
-                password = driver.find_element_by_id("m_login_password")
-                password.clear()
-                password.send_keys(config['FB_LOGINS']['PASSWORD'])
-                driver.find_element_by_name("login").click()
+                    driver.get(fbpostforlogin)
+                    LogInButton = driver.find_element_by_xpath("//a[@role = 'button']")
+                    LogInButton.click()
+                    username = driver.find_element_by_id("m_login_email")
+                    username.clear()
+                    username.send_keys(int(config['FB_LOGINS']['CONTACTNO']))
+                    password = driver.find_element_by_id("m_login_password")
+                    password.clear()
+                    password.send_keys(config['FB_LOGINS']['PASSWORD'])
+                    driver.find_element_by_name("login").click()
 
-                time.sleep(7)
-                fbpostforcomments = copy.deepcopy(data_fb_post)
+                    time.sleep(7)
+                    fbpostforcomments = copy.deepcopy(data_fb_post)
 
-                fbpostforcomments = fbpostforcomments.dropna(subset=['post_url'])
-                fb_comments = fbpostforcomments['post_url'].apply(lambda x: fbcomments.scrapeFbComments(x, driver))
-                fb_reviews = pd.concat([r for r in fb_comments], ignore_index=True)
+                    fbpostforcomments = fbpostforcomments.dropna(subset=['post_url'])
+                    fb_comments = fbpostforcomments['post_url'].apply(lambda x: fbcomments.scrapeFbComments(x, driver))
+                    fb_reviews = pd.concat([r for r in fb_comments], ignore_index=True)
 
-                fb_reviews = pd.merge(fb_reviews, data_fb_post, left_on='post', right_on='post_url', how="left")
-                fb_reviews = fb_reviews.drop_duplicates(subset='commentWithAuthorname')
-            
-                logger.info("--------------------- Scraping is Completed...!!! -------------------------")
-                logger.info("Exporting as csv into Output Path. Please wait...!!!")
-                fb_reviews.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\fb_input_data_" + keyword + ".csv", index=False)
-                if processoption in ['10000']:
-                    endprocess()
+                    fb_reviews = pd.merge(fb_reviews, data_fb_post, left_on='post', right_on='post_url', how="left")
+                    fb_reviews = fb_reviews.drop_duplicates(subset='commentWithAuthorname')
+
+                    logger.info("--------------------- Scraping is Completed...!!! -------------------------")
+                    logger.info("Exporting as csv into Output Path. Please wait...!!!")
+                    fb_reviews.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\fb_input_data_" + keyword + ".csv", index=False)
+                    if processoption in ['10000']:
+                        endprocess()
 
             """
             Data Pre-Processing
@@ -328,7 +351,12 @@ def main():
                 logger.info("------------- Data Pre-processing is Initiated. Please wait...!!! ---------")
                 if scrape not in [1]:
                     try:
-                        fb_reviews=pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\fb_input_data_" + keyword + ".csv")
+                        if external_data_flag != 1:
+                            fb_reviews=pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\fb_input_data_" + keyword + ".csv")
+                        else:
+                            keyword = input("Enter the Keyword: ")
+                            file_upload = easygui.fileopenbox()
+                            fb_reviews = pd.read_csv(file_upload)
                     except Exception as e:
                         print("\n Scraping output file is not available at the mentioned path")
                         logger.error("Exception: {}".format(e))
@@ -456,6 +484,7 @@ def main():
                 logger.info("End...!!!")
 
         except Exception as e:
+            nlp_server.kill()
             logger.error("Exception: {}".format(e))
 
     elif source == "amazon":
@@ -463,44 +492,42 @@ def main():
             """
             Data Scrapping
             """
-            keyword = input("Enter the Keyword: ")
-            if scrape in [1]:
-                logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
-            
-                review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
-                                         error_bad_lines=False,
-                                         encoding='ISO-8859-1')
-                review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
-                review_link_df = review_link_df.dropna(how='all', axis=0)
+            if external_data_flag != 1:
+                keyword = input("Enter the Keyword: ")
+                if scrape in [1]:
+                    logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
+                    review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
+                                             error_bad_lines=False)
+                    review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
+                    review_link_df = review_link_df.dropna(subset=['Review_Link_Href'], axis=0)
 
-                review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
-                review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
-                all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
-                total_number_of_pages = len(all_links_df.columns)
-                logger.info("Total no. of Review-Links Scraped: {}".format(total_number_of_pages))
-                review_link_df = pd.concat([review_link_df, all_links_df], axis=1)
-                review_link_df = pd.melt(review_link_df,
-                                     id_vars=['web-scraper-order', 'web-scraper-start-url', 'Name', 'Review_Link_Href',
-                                              'Review_Count', 'linkset', 'linkset2'],
-                                     value_vars=list(range(0, total_number_of_pages)), value_name='Final_link')
-                review_link_df = review_link_df.sort_values(by=['Review_Link_Href', 'variable'], ascending=[True, True])
-                review_link_df1 = review_link_df[review_link_df['Final_link'].isna() == False]
+                    review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
+                    review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
+                    all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
+                    total_number_of_pages = len(all_links_df.columns)
+                    logger.info("Total no. of Review-Links Scraped: {}".format(len(all_links_df)))
+                    review_link_df = pd.concat([review_link_df, all_links_df], axis=1)
+                    review_link_df = pd.melt(review_link_df,
+                                         id_vars=['web-scraper-order', 'web-scraper-start-url', 'Name', 'Review_Link_Href',
+                                                  'Review_Count', 'linkset', 'linkset2'],
+                                         value_vars=list(range(0, total_number_of_pages)), value_name='Final_link')
+                    review_link_df = review_link_df.sort_values(by=['Review_Link_Href', 'variable'], ascending=[True, True])
+                    review_link_df1 = review_link_df[review_link_df['Final_link'].isna() == False]
 
-                list_dataframe = review_link_df1['Final_link'].apply(lambda x: amzscraper.scrap_reviews(x, driver))
-                reviews_df_stacked = pd.concat([r for r in list_dataframe], ignore_index=True)
-                amz_reviews_data = pd.merge(reviews_df_stacked, review_link_df1, left_on='review_link',
-                                        right_on='Final_link',
-                                        how="left")
+                    list_dataframe = review_link_df1['Final_link'].apply(lambda x: amzscraper.scrap_reviews(x, driver))
+                    reviews_df_stacked = pd.concat([r for r in list_dataframe], ignore_index=True)
+                    amz_reviews_data = pd.merge(reviews_df_stacked, review_link_df1, left_on='review_link',
+                                            right_on='Final_link', how="left")
 
-                amz_reviews_data = amz_reviews_data.sort_values(by=['Review_Link_Href', 'Final_link'],
-                                                            ascending=[True, True])
+                    amz_reviews_data = amz_reviews_data.sort_values(by=['Review_Link_Href', 'Final_link'],
+                                                                ascending=[True, True])
 
-                logger.info("--------------------- Scraping is Completed...!!! -------------------------")
-                logger.info("Exporting as csv into Output Path. Please wait...!!!")
-                amz_reviews_data.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\amz_input_data_" + keyword + ".csv",
-                                    index=False)
-                if processoption in ['10000']:
-                    endprocess()
+                    logger.info("--------------------- Scraping is Completed...!!! -------------------------")
+                    logger.info("Exporting as csv into Output Path. Please wait...!!!")
+                    amz_reviews_data.to_csv(config['PATHS']['BASEDIR'] + "\\outputs\\amz_input_data_" + keyword + ".csv",
+                                        index=False)
+                    if processoption in ['10000']:
+                        endprocess()
 
             """
             Data Pre-Processing
@@ -509,7 +536,12 @@ def main():
                 logger.info("------------- Data Pre-processing is Initiated. Please wait...!!! ---------")
                 if scrape not in [1]:
                     try:
-                        amz_reviews_data = pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\amz_input_data_" + keyword + ".csv")
+                        if external_data_flag != 1:
+                            amz_reviews_data=pd.read_csv(config['PATHS']['BASEDIR'] + "\\outputs\\amz_input_data_" + keyword + ".csv")
+                        else:
+                            keyword = input("Enter the Keyword: ")
+                            file_upload = easygui.fileopenbox()
+                            amz_reviews_data = pd.read_csv(file_upload)
                     except Exception as e:
                         print("\n Scraping output file is not available at the mentioned path")
                         logger.error("Exception: {}".format(e))
@@ -637,6 +669,7 @@ def main():
                 logger.info("End...!!!")
 
         except Exception as e:
+            nlp_server.kill()
             logger.error("Exception: {}".format(e))
 
     return 1
