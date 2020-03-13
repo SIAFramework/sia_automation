@@ -133,6 +133,7 @@ def amazonPreProcess(amazon_data, spacy_nlp):
     amazon_data['final_content'] = amazon_data[['title', 'body']].apply(lambda x: search_substring(x.title, x.body),
                                                                         axis=1)
     amazon_data['final_content'] = amazon_data['final_content'].apply(lambda x: identify_names(x, spacy_nlp))
+    amazon_data.dropna(subset=['final_content'], inplace=True)
     amazon_data['language'] = amazon_data['final_content'].apply(lambda x: detect_language(x, spacy_nlp))
     amazon_data = amazon_data[amazon_data['language'] == "en"]
     amazon_data['final_content'] = amazon_data['final_content'].apply(lambda x: rm_long_words(x))
@@ -174,6 +175,7 @@ def fbPreProcess(facebook_data, spacy_nlp):
 
 
 def twitterPreProcess(twitter_data, spacy_nlp):
+    twitter_data = twitter_data.dropna(subset=["text"], inplace=False)
     twitter_data['key'] = list(range(1, twitter_data.shape[0] + 1, 1))
     twitter_data['language'] = twitter_data['text'].apply(lambda x: detect_language(x, spacy_nlp))
     twitter_data = twitter_data[twitter_data['language'] == "en"]
