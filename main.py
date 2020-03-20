@@ -1,6 +1,6 @@
 """
 Created on Sat Dec 21 15:10:49 2019
-Last Modified on Wed Jan 21 20:40:00 2020
+Last Modified on Fri Mar 20 20:40:00 2020
 @author: Yashwanth Ramachandra
 """
 
@@ -21,6 +21,7 @@ import warnings
 from nltk.corpus import stopwords
 import urllib
 import easygui
+import nltk
 
 warnings.filterwarnings("ignore")
 
@@ -131,9 +132,18 @@ def main():
     nlp_server = subprocess.Popen(cmd, cwd=stanfordnlp_loc)
     spacy_nlp = spacy.load('en_core_web_sm')
     spacy_nlp.add_pipe(LanguageDetector(), name="language_detector", last=True)
-    sentiment_nlp = StanfordCoreNLP('http://localhost:9000')
     if not os.path.isdir(config['PATHS']['SUPPORTING_FILES'] + '\\en_ewt_models'):
         stanfordnlp.download('en', resource_dir=config['PATHS']['SUPPORTING_FILES'])
+        demoji.download_codes()
+
+    try:
+        if not any([os.path.isdir(nltk.data.find('tokenizers/punkt')),os.path.isdir(nltk.data.find('corpora/stopwords'))]):
+            pass
+    except LookupError as e:
+        nltk.download('punkt')
+        nltk.download('stopwords')
+
+    sentiment_nlp = StanfordCoreNLP('http://localhost:9000')
     nlp = stanfordnlp.Pipeline(models_dir=config['PATHS']['SUPPORTING_FILES'])
 
     if source == "twitter":
@@ -681,8 +691,7 @@ if __name__ == '__main__':
     print("Please find the Logs here: {}".format(config_log['PATHS']['BASEDIR'] + "\\logs\\"))
     print("Please find the intermediate outputs here: {}".format(config_log['PATHS']['BASEDIR']) + "\\outputs\\")
     logging.basicConfig(filename=config_log['PATHS']['BASEDIR'] + "\\logs\\sia_log.log",
-                        format='%(asctime)s %(levelname)s %(message)s',
-                        datefmt='%a, %d %b %Y %H:%M:%S', filemode='w')
+                        format='%(asctime)s %(levelname)s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', filemode='w')
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 

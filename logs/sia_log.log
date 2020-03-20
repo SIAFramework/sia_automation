@@ -1,36 +1,36 @@
-Fri, 13 Mar 2020 14:34:54 INFO ---------------- Scrapping is Initiated. Please wait...!!! ----------------
-Fri, 13 Mar 2020 14:34:54 INFO Pages 3 of 3 has been processed
-Fri, 13 Mar 2020 14:34:58 INFO Exporting Scraped data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:34:58 INFO --------------------- Scraping is Completed...!!! -------------------------
-Fri, 13 Mar 2020 14:34:58 INFO ------------- Data Pre-processing is Initiated. Please wait...!!! ---------
-Fri, 13 Mar 2020 14:35:02 INFO NumExpr defaulting to 4 threads.
-Fri, 13 Mar 2020 14:35:02 INFO Exporting Preprocessing data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:02 INFO ---------------- Data Pre-processing is Completed...!!! -------------------
-Fri, 13 Mar 2020 14:35:02 INFO -------------------------- Features Extraction  ----------------------------
-Fri, 13 Mar 2020 14:35:02 INFO Sentiment Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Exporting Sentiments data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Sentiments Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Themes Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Themes Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Emotions Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO Emotions Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:37:21 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO ------------------ Features Extraction is Completed...!!! -----------------
-Fri, 13 Mar 2020 14:37:21 INFO --------------- Clustering is in Progress. Please wait...!!! ---------------
-Fri, 13 Mar 2020 14:37:21 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO -------------------- Clustering is Completed...!!! --------------------------
-Fri, 13 Mar 2020 14:37:21 INFO ------------------- Visualization is Initiated. Please wait...!!! -----------
-Fri, 13 Mar 2020 14:37:23 INFO Plotting WordCloud for themes_keyword
-Fri, 13 Mar 2020 14:37:24 INFO Plotting WordCloud for emotion_keyword
-Fri, 13 Mar 2020 14:37:25 INFO Plotting WordCloud for theme_groups
-Fri, 13 Mar 2020 14:37:25 INFO Plotting WordCloud for emotion_groups
-Fri, 13 Mar 2020 14:37:26 INFO Plotting Corresponding Chart...!!!
-Fri, 13 Mar 2020 14:37:26 INFO Drawing Contigency Table...!!!
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for themes_keyword
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for emotion_keyword
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for theme_groups
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for emotion_groups
-Fri, 13 Mar 2020 14:37:26 INFO -------------------- Visualization Completed...!!! --------------------------
-Fri, 13 Mar 2020 14:37:26 INFO Total elapsed time: 00:03:05
-Fri, 13 Mar 2020 14:37:26 INFO End...!!!
+Fri, 20 Mar 2020 20:36:43 INFO ---------------- Scrapping is Initiated. Please wait...!!! ----------------
+Fri, 20 Mar 2020 20:36:43 INFO Pages 2 of 2 has been processed
+Fri, 20 Mar 2020 20:36:46 INFO Exporting Scraped data as .csv into Output path. Please wait...!!!
+Fri, 20 Mar 2020 20:36:46 INFO --------------------- Scraping is Completed...!!! -------------------------
+Fri, 20 Mar 2020 20:36:46 INFO ------------- Data Pre-processing is Initiated. Please wait...!!! ---------
+Fri, 20 Mar 2020 20:36:50 INFO NumExpr defaulting to 4 threads.
+Fri, 20 Mar 2020 20:36:50 INFO Exporting Preprocessing data as .csv into Output path. Please wait...!!!
+Fri, 20 Mar 2020 20:36:50 INFO ---------------- Data Pre-processing is Completed...!!! -------------------
+Fri, 20 Mar 2020 20:36:50 INFO -------------------------- Features Extraction  ----------------------------
+Fri, 20 Mar 2020 20:36:50 INFO Sentiment Extraction is in Progress. Please wait...!!!
+Fri, 20 Mar 2020 20:36:52 INFO Exporting Sentiments data as .csv into Output path. Please wait...!!!
+Fri, 20 Mar 2020 20:36:52 INFO Sentiments Extraction is Completed...!!!
+Fri, 20 Mar 2020 20:36:52 INFO Themes Extraction is in Progress. Please wait...!!!
+Fri, 20 Mar 2020 20:37:04 INFO Exporting as csv into Output Path. Please wait...!!!
+Fri, 20 Mar 2020 20:37:04 INFO Themes Extraction is Completed...!!!
+Fri, 20 Mar 2020 20:37:04 INFO Emotions Extraction is in Progress. Please wait...!!!
+Fri, 20 Mar 2020 20:37:39 INFO Emotions Extraction is Completed...!!!
+Fri, 20 Mar 2020 20:37:39 INFO Exporting as csv into Output Path. Please wait...!!!
+Fri, 20 Mar 2020 20:37:39 INFO ------------------ Features Extraction is Completed...!!! -----------------
+Fri, 20 Mar 2020 20:37:39 INFO --------------- Clustering is in Progress. Please wait...!!! ---------------
+Fri, 20 Mar 2020 20:37:39 INFO Exporting as csv into Output Path. Please wait...!!!
+Fri, 20 Mar 2020 20:37:39 INFO -------------------- Clustering is Completed...!!! --------------------------
+Fri, 20 Mar 2020 20:37:39 INFO ------------------- Visualization is Initiated. Please wait...!!! -----------
+Fri, 20 Mar 2020 20:37:40 INFO Plotting WordCloud for themes_keyword
+Fri, 20 Mar 2020 20:37:40 INFO Plotting WordCloud for emotion_keyword
+Fri, 20 Mar 2020 20:37:41 INFO Plotting WordCloud for theme_groups
+Fri, 20 Mar 2020 20:37:42 INFO Plotting WordCloud for emotion_groups
+Fri, 20 Mar 2020 20:37:42 INFO Plotting Corresponding Chart...!!!
+Fri, 20 Mar 2020 20:37:43 INFO Drawing Contigency Table...!!!
+Fri, 20 Mar 2020 20:37:43 INFO Frequency Distribution is generated for themes_keyword
+Fri, 20 Mar 2020 20:37:43 INFO Frequency Distribution is generated for emotion_keyword
+Fri, 20 Mar 2020 20:37:43 INFO Frequency Distribution is generated for theme_groups
+Fri, 20 Mar 2020 20:37:43 INFO Frequency Distribution is generated for emotion_groups
+Fri, 20 Mar 2020 20:37:43 INFO -------------------- Visualization Completed...!!! --------------------------
+Fri, 20 Mar 2020 20:37:43 INFO Total elapsed time: 00:01:15
+Fri, 20 Mar 2020 20:37:43 INFO End...!!!
