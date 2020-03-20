@@ -1,36 +1,103 @@
-Fri, 13 Mar 2020 14:34:54 INFO ---------------- Scrapping is Initiated. Please wait...!!! ----------------
-Fri, 13 Mar 2020 14:34:54 INFO Pages 3 of 3 has been processed
-Fri, 13 Mar 2020 14:34:58 INFO Exporting Scraped data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:34:58 INFO --------------------- Scraping is Completed...!!! -------------------------
-Fri, 13 Mar 2020 14:34:58 INFO ------------- Data Pre-processing is Initiated. Please wait...!!! ---------
-Fri, 13 Mar 2020 14:35:02 INFO NumExpr defaulting to 4 threads.
-Fri, 13 Mar 2020 14:35:02 INFO Exporting Preprocessing data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:02 INFO ---------------- Data Pre-processing is Completed...!!! -------------------
-Fri, 13 Mar 2020 14:35:02 INFO -------------------------- Features Extraction  ----------------------------
-Fri, 13 Mar 2020 14:35:02 INFO Sentiment Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Exporting Sentiments data as .csv into Output path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Sentiments Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:35:05 INFO Themes Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Themes Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:35:33 INFO Emotions Extraction is in Progress. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO Emotions Extraction is Completed...!!!
-Fri, 13 Mar 2020 14:37:21 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO ------------------ Features Extraction is Completed...!!! -----------------
-Fri, 13 Mar 2020 14:37:21 INFO --------------- Clustering is in Progress. Please wait...!!! ---------------
-Fri, 13 Mar 2020 14:37:21 INFO Exporting as csv into Output Path. Please wait...!!!
-Fri, 13 Mar 2020 14:37:21 INFO -------------------- Clustering is Completed...!!! --------------------------
-Fri, 13 Mar 2020 14:37:21 INFO ------------------- Visualization is Initiated. Please wait...!!! -----------
-Fri, 13 Mar 2020 14:37:23 INFO Plotting WordCloud for themes_keyword
-Fri, 13 Mar 2020 14:37:24 INFO Plotting WordCloud for emotion_keyword
-Fri, 13 Mar 2020 14:37:25 INFO Plotting WordCloud for theme_groups
-Fri, 13 Mar 2020 14:37:25 INFO Plotting WordCloud for emotion_groups
-Fri, 13 Mar 2020 14:37:26 INFO Plotting Corresponding Chart...!!!
-Fri, 13 Mar 2020 14:37:26 INFO Drawing Contigency Table...!!!
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for themes_keyword
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for emotion_keyword
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for theme_groups
-Fri, 13 Mar 2020 14:37:26 INFO Frequency Distribution is generated for emotion_groups
-Fri, 13 Mar 2020 14:37:26 INFO -------------------- Visualization Completed...!!! --------------------------
-Fri, 13 Mar 2020 14:37:26 INFO Total elapsed time: 00:03:05
-Fri, 13 Mar 2020 14:37:26 INFO End...!!!
+Thu, 19 Mar 2020 10:30:18 INFO ---------------- Scrapping is Initiated. Please wait...!!! ----------------
+Thu, 19 Mar 2020 10:32:01 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:01 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:35 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:45 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:32:56 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:20 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:31 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:31 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:41 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:33:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:34:06 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:34:14 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:34:25 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:34:57 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:35:12 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:35:21 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:35:49 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:35:58 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:07 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:15 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:24 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:34 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:43 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:36:52 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:02 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:12 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:20 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:29 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:47 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:37:56 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:05 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:13 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:23 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:31 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:40 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:48 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:38:59 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:39:08 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:39:17 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:39:25 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:39:36 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:39:45 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:40:43 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:40:51 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:41:01 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:41:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:41:36 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:41:45 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:00 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:00 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:00 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:24 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:35 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:45 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:42:55 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:43:04 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:43:18 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:43:27 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:44:08 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:44:28 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:44:38 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:44:51 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:45:39 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:45:52 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:45:59 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:08 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:20 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:29 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:38 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:47 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:47 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:46:57 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:05 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:05 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:14 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:14 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:22 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:31 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:42 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:58 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:47:58 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:10 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:10 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:22 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:33 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:33 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:48:50 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:02 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:11 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:20 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:20 INFO Exception is list index out of range
+Thu, 19 Mar 2020 10:49:33 INFO Exception is list index out of range

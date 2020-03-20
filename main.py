@@ -38,7 +38,7 @@ import stanfordnlp
 """
 Custom Libraries
 """
-from scrapers import twscraper, fbscraper, amzscraper, fbcomments
+from scrapers import twscraper, fbscraper, amzscraper, amzreviewlinkscrapper, fbcomments
 from common import preprocReviews
 from features import sentiments, themes, emotions, cluster
 from visualization import visualization as viz
@@ -127,7 +127,6 @@ def main():
 
     stanfordnlp_loc = config['PATHS']['SUPPORTING_FILES'] + '\\stanford-corenlp-full-2018-10-05' +"\\"
     cmd = "java -mx4g -cp " + '"*"' + " edu.stanford.nlp.pipeline.StanfordCoreNLPServer"
-
     nlp_server = subprocess.Popen(cmd, cwd=stanfordnlp_loc)
     spacy_nlp = spacy.load('en_core_web_sm')
     spacy_nlp.add_pipe(LanguageDetector(), name="language_detector", last=True)
@@ -135,7 +134,6 @@ def main():
     if not os.path.isdir(config['PATHS']['SUPPORTING_FILES'] + '\\en_ewt_models'):
         stanfordnlp.download('en', resource_dir=config['PATHS']['SUPPORTING_FILES'])
     nlp = stanfordnlp.Pipeline(models_dir=config['PATHS']['SUPPORTING_FILES'])
-
     if source == "twitter":
         try:
             """
@@ -496,11 +494,17 @@ def main():
                 keyword = input("Enter the Keyword: ")
                 if scrape in [1]:
                     logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
-                    review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
+                    rev_lnk_scrp = int(input("\nDo you want to upload the review links externally  0/1: "))
+                    checkInputStatus(rev_lnk_scrp)
+                    if rev_lnk_scrp in [1]:
+                        review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
                                              error_bad_lines=False)
+                    else:
+                        review_link_df1 = amzreviewlinkscrapper.getreview_link(keyword)
+                        review_link_df = review_link_df1.rename(columns = {"review_links":"Review_Link_Href","total_review_count":"Review_Count","product_name":"Name"})
                     review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
                     review_link_df = review_link_df.dropna(subset=['Review_Link_Href'], axis=0)
-
+                    review_link_df.to_csv("C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping\\outputs\\review_link_df.csv")
                     review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
                     review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
                     all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
@@ -508,7 +512,7 @@ def main():
                     logger.info("Total no. of Review-Links Scraped: {}".format(len(all_links_df)))
                     review_link_df = pd.concat([review_link_df, all_links_df], axis=1)
                     review_link_df = pd.melt(review_link_df,
-                                         id_vars=['web-scraper-order', 'web-scraper-start-url', 'Name', 'Review_Link_Href',
+                                         id_vars=['Name', 'Review_Link_Href',
                                                   'Review_Count', 'linkset', 'linkset2'],
                                          value_vars=list(range(0, total_number_of_pages)), value_name='Final_link')
                     review_link_df = review_link_df.sort_values(by=['Review_Link_Href', 'variable'], ascending=[True, True])
