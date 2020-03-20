@@ -14,10 +14,11 @@ def main():
     try:
         if missing:
             python = sys.executable
-            subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
-            subprocess.check_call([python, '-m', 'spacy','download','en_core_web_sm'], stdout=subprocess.DEVNULL)
             subprocess.check_call([python, '-m', 'pip', 'install', 'torch===1.4.0', 'torchvision===0.5.0', '-f',
                                    'https://download.pytorch.org/whl/torch_stable.html'])
+            subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+            subprocess.check_call([python, '-m', 'spacy','download','en_core_web_sm'], stdout=subprocess.DEVNULL)
+            subprocess.check_call([python, '-m', 'textblob.download_corpora'], stdout=subprocess.DEVNULL)
         print("All prerequisites are Installed...")
     except subprocess.CalledProcessError as e:
         print(e)
