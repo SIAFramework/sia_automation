@@ -16,7 +16,7 @@ import re
 import logging
 logger = logging.getLogger('scraperlogger')
 
-#review_link_df1 = getreview_link("lakme")
+
 
 def findnum(x):
     if len(re.findall(r'\d+', x))==0:
@@ -27,7 +27,7 @@ def findnum(x):
 
 def getreview_link(keyword):
     search_term = keyword
-    print("Search term =",search_term)
+    #print("Search term =",search_term)
 
     driver = webdriver.Chrome(r'C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe')
     driver.get("https://www.amazon.com")  
@@ -45,12 +45,12 @@ def getreview_link(keyword):
     
     num_of_pages = max(list_pages)
     final_data = []
-    print("no.of pages = ",num_of_pages)
+    #print("no.of pages = ",num_of_pages)
     for n in range(0, num_of_pages):
     
         ids = driver.find_elements_by_xpath("//a[@class='a-link-normal a-text-normal']")
         number_of_prod = len(ids)
-        print("No.of products = ",number_of_prod)
+        #print("No.of pages = ",n, " and No.of products = ",number_of_prod)
         brand = []
         product_name = []
         num_of_reviews = []
@@ -70,7 +70,6 @@ def getreview_link(keyword):
                 except Exception as e:
                     logger.info("Exception is {}".format(e))
                     brand.append(None)
-                print("brand is : ",brand)
                 try:
                     product_name_element = driver.find_elements_by_xpath("//span[@id='productTitle']")[0]
                     product_nametemp = product_name_element.text
@@ -110,12 +109,12 @@ def getreview_link(keyword):
     
         temp_review_data = pd.DataFrame({'brand':brand, 'product_name':product_name, 'price':price, 'num_of_reviews':num_of_reviews, 'review_links':review_links})
         temp_review_data['review_id'] = list(range(0, temp_review_data.shape[0]))
-        print("temp_review_data is : ",temp_review_data)
+        #temp_review_data.to_csv(r"C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping_v1\\outputs\\temp_review_data_"+str(n)+"_"+str(i)+".csv", index=False)
     
 
     final_data.append(temp_review_data)
     final_data1 = pd.concat(final_data)    
-    print("final_data1 is : ",final_data1)
+    #final_data1.to_csv(r"C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping_v1\\outputs\\final_data1_"+str(n)+"_"+str(i)+".csv", index=False)
 
     pos_reviews = []
     neg_reviews = []
@@ -156,5 +155,5 @@ def getreview_link(keyword):
     num_reviewsDF['total_review_count'] = num_reviewsDF['pos_review_count'] + num_reviewsDF['neg_review_count'] 
 
     final_data1 = final_data1.merge(num_reviewsDF, on = 'review_id', how='left')
-    final_data1.to_csv(r"C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping\\outputs\\sample_review_link.csv", index=False)
+    #final_data1.to_csv(r"C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping_v1\\outputs\\sample_review_link.csv", index=False)
     return final_data1

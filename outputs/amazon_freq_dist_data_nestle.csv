@@ -1,0 +1,11 @@
+words,count,features
+chocolate,4,themes_keyword
+home,1,themes_keyword
+bar,1,themes_keyword
+,3,emotion_keyword
+best,1,emotion_keyword
+favorite,1,emotion_keyword
+Customization,4,theme_groups
+Place,2,theme_groups
+happy,1,emotion_groups
+delighted,1,emotion_groups

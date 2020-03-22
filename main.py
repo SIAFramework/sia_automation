@@ -500,11 +500,13 @@ def main():
                         review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
                                              error_bad_lines=False)
                     else:
+                        logger.info("---------------- Review link extraction is Initiated. Please wait...!!! ----------------")
                         review_link_df1 = amzreviewlinkscrapper.getreview_link(keyword)
+                        logger.info("---------------- Review link extraction is completed. ----------------")
                         review_link_df = review_link_df1.rename(columns = {"review_links":"Review_Link_Href","total_review_count":"Review_Count","product_name":"Name"})
                     review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
                     review_link_df = review_link_df.dropna(subset=['Review_Link_Href'], axis=0)
-                    review_link_df.to_csv("C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping\\outputs\\review_link_df.csv")
+                    #review_link_df.to_csv("C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping\\outputs\\review_link_df.csv")
                     review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
                     review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
                     all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
