@@ -323,6 +323,7 @@ def main():
 
                     data_fb_post = pd.DataFrame(data_fb)
                     data_fb_post['keyword'] = keyword
+                    data_fb_post = data_fb_post.dropna(subset=['post_url'], axis=0).reset_index()
 
                     time.sleep(2)
                     fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
