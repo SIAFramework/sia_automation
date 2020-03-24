@@ -134,6 +134,7 @@ def main():
     if not os.path.isdir(config['PATHS']['SUPPORTING_FILES'] + '\\en_ewt_models'):
         stanfordnlp.download('en', resource_dir=config['PATHS']['SUPPORTING_FILES'])
     nlp = stanfordnlp.Pipeline(models_dir=config['PATHS']['SUPPORTING_FILES'])
+
     if source == "twitter":
         try:
             """
@@ -308,9 +309,9 @@ def main():
                     pages = input("Enter the no. of Pages: ")
                     logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
                     data_fb, keyword = fbscraper.fb_scraper(keyword, pages)
-
                     data_fb_post = pd.DataFrame(data_fb)
                     data_fb_post['keyword'] = keyword
+                    data_fb_post = data_fb_post.dropna(subset=['post_url'], axis=0).reset_index()
 
                     time.sleep(2)
                     fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
@@ -506,7 +507,6 @@ def main():
                         review_link_df = review_link_df1.rename(columns = {"review_links":"Review_Link_Href","total_review_count":"Review_Count","product_name":"Name"})
                     review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
                     review_link_df = review_link_df.dropna(subset=['Review_Link_Href'], axis=0)
-                    #review_link_df.to_csv("C:\\Users\\mabraham\\Documents\\IRI\\Sentiment\\Development\\sia_automation_am_revlink_scraping\\outputs\\review_link_df.csv")
                     review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
                     review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
                     all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
