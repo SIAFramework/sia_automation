@@ -323,31 +323,39 @@ def main():
 
                     data_fb_post = pd.DataFrame(data_fb)
                     data_fb_post['keyword'] = keyword
-                    data_fb_post = data_fb_post.dropna(subset=['post_url'], axis=0).reset_index()
 
-                    time.sleep(2)
-                    fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
+                    if all(data_fb_post['post_url'].isna()):
+                        fb_reviews = copy.deepcopy(data_fb_post)
+                        cols = ['keyword','post_text']
+                        fb_reviews = fb_reviews[cols]
+                        fb_reviews['post'] = 'http://m.facebook.com'
+                        fb_reviews.columns = ['authorName','commentWithAuthorname','post']
+                        fb_reviews = pd.concat([fb_reviews, data_fb_post], axis=1)
+                    else:
+                        data_fb_post = data_fb_post.dropna(subset=['post_url'], axis=0)
+                        time.sleep(2)
+                        fbpostforlogin = data_fb_post.iloc[:1, ]['post_url'].values[0]
 
-                    driver.get(fbpostforlogin)
-                    LogInButton = driver.find_element_by_xpath("//a[@role = 'button']")
-                    LogInButton.click()
-                    username = driver.find_element_by_id("m_login_email")
-                    username.clear()
-                    username.send_keys(int(config['FB_LOGINS']['CONTACTNO']))
-                    password = driver.find_element_by_id("m_login_password")
-                    password.clear()
-                    password.send_keys(config['FB_LOGINS']['PASSWORD'])
-                    driver.find_element_by_name("login").click()
+                        driver.get(fbpostforlogin)
+                        LogInButton = driver.find_element_by_xpath("//a[@role = 'button']")
+                        LogInButton.click()
+                        username = driver.find_element_by_id("m_login_email")
+                        username.clear()
+                        username.send_keys(int(config['FB_LOGINS']['CONTACTNO']))
+                        password = driver.find_element_by_id("m_login_password")
+                        password.clear()
+                        password.send_keys(config['FB_LOGINS']['PASSWORD'])
+                        driver.find_element_by_name("login").click()
 
-                    time.sleep(7)
-                    fbpostforcomments = copy.deepcopy(data_fb_post)
+                        time.sleep(7)
+                        fbpostforcomments = copy.deepcopy(data_fb_post)
 
-                    fbpostforcomments = fbpostforcomments.dropna(subset=['post_url'])
-                    fb_comments = fbpostforcomments['post_url'].apply(lambda x: fbcomments.scrapeFbComments(x, driver))
-                    fb_reviews = pd.concat([r for r in fb_comments], ignore_index=True)
+                        fbpostforcomments = fbpostforcomments.dropna(subset=['post_url'])
+                        fb_comments = fbpostforcomments['post_url'].apply(lambda x: fbcomments.scrapeFbComments(x, driver))
+                        fb_reviews = pd.concat([r for r in fb_comments], ignore_index=True)
 
-                    fb_reviews = pd.merge(fb_reviews, data_fb_post, left_on='post', right_on='post_url', how="left")
-                    fb_reviews = fb_reviews.drop_duplicates(subset='commentWithAuthorname')
+                        fb_reviews = pd.merge(fb_reviews, data_fb_post, left_on='post', right_on='post_url', how="left")
+                        fb_reviews = fb_reviews.drop_duplicates(subset='commentWithAuthorname')
 
                     logger.info("--------------------- Scraping is Completed...!!! -------------------------")
                     logger.info("Exporting as csv into Output Path. Please wait...!!!")
