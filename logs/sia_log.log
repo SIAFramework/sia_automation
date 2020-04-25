@@ -1,32 +1,32 @@
-Sat, 25 Apr 2020 22:19:58 INFO ------------- Data Pre-processing is Initiated. Please wait...!!! ---------
-Sat, 25 Apr 2020 22:20:22 INFO NumExpr defaulting to 4 threads.
-Sat, 25 Apr 2020 22:20:22 INFO Exporting Preprocessing data as .csv into Output path. Please wait...!!!
-Sat, 25 Apr 2020 22:20:22 INFO ---------------- Data Pre-processing is Completed...!!! -------------------
-Sat, 25 Apr 2020 22:20:22 INFO -------------------------- Features Extraction  ----------------------------
-Sat, 25 Apr 2020 22:20:22 INFO Sentiment Extraction is in Progress. Please wait...!!!
-Sat, 25 Apr 2020 22:20:38 INFO Exporting Sentiments data as .csv into Output path. Please wait...!!!
-Sat, 25 Apr 2020 22:20:38 INFO Sentiments Extraction is Completed...!!!
-Sat, 25 Apr 2020 22:20:38 INFO Themes Extraction is in Progress. Please wait...!!!
-Sat, 25 Apr 2020 22:21:06 INFO Exporting as csv into Output Path. Please wait...!!!
-Sat, 25 Apr 2020 22:21:07 INFO Themes Extraction is Completed...!!!
-Sat, 25 Apr 2020 22:21:07 INFO Emotions Extraction is in Progress. Please wait...!!!
-Sat, 25 Apr 2020 22:22:16 INFO Emotions Extraction is Completed...!!!
-Sat, 25 Apr 2020 22:22:16 INFO Exporting as csv into Output Path. Please wait...!!!
-Sat, 25 Apr 2020 22:22:16 INFO ------------------ Features Extraction is Completed...!!! -----------------
-Sat, 25 Apr 2020 22:22:16 INFO --------------- Clustering is in Progress. Please wait...!!! ---------------
-Sat, 25 Apr 2020 22:22:16 INFO Exporting as csv into Output Path. Please wait...!!!
-Sat, 25 Apr 2020 22:22:16 INFO -------------------- Clustering is Completed...!!! --------------------------
-Sat, 25 Apr 2020 22:22:16 INFO ------------------- Visualization is Initiated. Please wait...!!! -----------
-Sat, 25 Apr 2020 22:22:17 INFO Plotting WordCloud for themes_keyword
-Sat, 25 Apr 2020 22:22:19 INFO Plotting WordCloud for emotion_keyword
-Sat, 25 Apr 2020 22:22:19 INFO Plotting WordCloud for theme_groups
-Sat, 25 Apr 2020 22:22:20 INFO Plotting WordCloud for emotion_groups
-Sat, 25 Apr 2020 22:22:21 INFO Plotting Corresponding Chart...!!!
-Sat, 25 Apr 2020 22:22:22 INFO Drawing Contigency Table...!!!
-Sat, 25 Apr 2020 22:22:22 INFO Frequency Distribution is generated for themes_keyword
-Sat, 25 Apr 2020 22:22:22 INFO Frequency Distribution is generated for emotion_keyword
-Sat, 25 Apr 2020 22:22:22 INFO Frequency Distribution is generated for theme_groups
-Sat, 25 Apr 2020 22:22:22 INFO Frequency Distribution is generated for emotion_groups
-Sat, 25 Apr 2020 22:22:22 INFO -------------------- Visualization Completed...!!! --------------------------
-Sat, 25 Apr 2020 22:22:22 INFO Total elapsed time: 00:20:38
-Sat, 25 Apr 2020 22:22:22 INFO End...!!!
+Sat, 25 Apr 2020 23:07:38 INFO ------------- Data Pre-processing is Initiated. Please wait...!!! ---------
+Sat, 25 Apr 2020 23:08:10 INFO NumExpr defaulting to 4 threads.
+Sat, 25 Apr 2020 23:08:10 INFO Exporting Preprocessing data as .csv into Output path. Please wait...!!!
+Sat, 25 Apr 2020 23:08:10 INFO ---------------- Data Pre-processing is Completed...!!! -------------------
+Sat, 25 Apr 2020 23:08:10 INFO -------------------------- Features Extraction  ----------------------------
+Sat, 25 Apr 2020 23:08:10 INFO Sentiment Extraction is in Progress. Please wait...!!!
+Sat, 25 Apr 2020 23:08:14 INFO Exporting Sentiments data as .csv into Output path. Please wait...!!!
+Sat, 25 Apr 2020 23:08:14 INFO Sentiments Extraction is Completed...!!!
+Sat, 25 Apr 2020 23:08:14 INFO Themes Extraction is in Progress. Please wait...!!!
+Sat, 25 Apr 2020 23:08:35 INFO Exporting as csv into Output Path. Please wait...!!!
+Sat, 25 Apr 2020 23:08:35 INFO Themes Extraction is Completed...!!!
+Sat, 25 Apr 2020 23:08:35 INFO Emotions Extraction is in Progress. Please wait...!!!
+Sat, 25 Apr 2020 23:10:00 INFO Emotions Extraction is Completed...!!!
+Sat, 25 Apr 2020 23:10:00 INFO Exporting as csv into Output Path. Please wait...!!!
+Sat, 25 Apr 2020 23:10:00 INFO ------------------ Features Extraction is Completed...!!! -----------------
+Sat, 25 Apr 2020 23:10:00 INFO --------------- Clustering is in Progress. Please wait...!!! ---------------
+Sat, 25 Apr 2020 23:10:00 INFO Exporting as csv into Output Path. Please wait...!!!
+Sat, 25 Apr 2020 23:10:00 INFO -------------------- Clustering is Completed...!!! --------------------------
+Sat, 25 Apr 2020 23:10:00 INFO ------------------- Visualization is Initiated. Please wait...!!! -----------
+Sat, 25 Apr 2020 23:10:01 INFO Plotting WordCloud for themes_keyword
+Sat, 25 Apr 2020 23:10:02 INFO Plotting WordCloud for emotion_keyword
+Sat, 25 Apr 2020 23:10:03 INFO Plotting WordCloud for theme_groups
+Sat, 25 Apr 2020 23:10:04 INFO Plotting WordCloud for emotion_groups
+Sat, 25 Apr 2020 23:10:04 INFO Plotting Corresponding Chart...!!!
+Sat, 25 Apr 2020 23:10:05 INFO Drawing Contigency Table...!!!
+Sat, 25 Apr 2020 23:10:05 INFO Frequency Distribution is generated for themes_keyword
+Sat, 25 Apr 2020 23:10:05 INFO Frequency Distribution is generated for emotion_keyword
+Sat, 25 Apr 2020 23:10:05 INFO Frequency Distribution is generated for theme_groups
+Sat, 25 Apr 2020 23:10:05 INFO Frequency Distribution is generated for emotion_groups
+Sat, 25 Apr 2020 23:10:05 INFO -------------------- Visualization Completed...!!! --------------------------
+Sat, 25 Apr 2020 23:10:05 INFO Total elapsed time: 00:35:04
+Sat, 25 Apr 2020 23:10:05 INFO End...!!!
