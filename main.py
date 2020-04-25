@@ -169,7 +169,7 @@ def main():
                         else:
                             keyword = input("Enter the Keyword: ")
                             file_upload = easygui.fileopenbox()
-                            data_tw_post = pd.read_csv(file_upload)
+                            data_tw_post = pd.read_csv(file_upload, encoding='cp1252')
                     except Exception as e:
                         print("\n Scraping output file is not available at the mentioned path")
                         logger.error("Exception: {}".format(e))
@@ -514,8 +514,7 @@ def main():
                     logger.info("Total no. of Review-Links Scraped: {}".format(len(all_links_df)))
                     review_link_df = pd.concat([review_link_df, all_links_df], axis=1)
                     review_link_df = pd.melt(review_link_df,
-                                         id_vars=['Name', 'Review_Link_Href',
-                                                  'Review_Count', 'linkset', 'linkset2'],
+                                         id_vars=['Name', 'Review_Link_Href','Review_Count', 'linkset', 'linkset2'],
                                          value_vars=list(range(0, total_number_of_pages)), value_name='Final_link')
                     review_link_df = review_link_df.sort_values(by=['Review_Link_Href', 'variable'], ascending=[True, True])
                     review_link_df1 = review_link_df[review_link_df['Final_link'].isna() == False]
