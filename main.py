@@ -39,7 +39,7 @@ import stanfordnlp
 """
 Custom Libraries
 """
-from scrapers import twscraper, fbscraper, amzscraper, fbcomments
+from scrapers import twscraper, fbscraper, amzscraper, amzreviewlinkscrapper, fbcomments
 from common import preprocReviews
 from features import sentiments, themes, emotions, cluster
 from visualization import visualization as viz
@@ -128,7 +128,6 @@ def main():
 
     stanfordnlp_loc = config['PATHS']['SUPPORTING_FILES'] + '\\stanford-corenlp-full-2018-10-05' +"\\"
     cmd = "java -mx4g -cp " + '"*"' + " edu.stanford.nlp.pipeline.StanfordCoreNLPServer"
-
     nlp_server = subprocess.Popen(cmd, cwd=stanfordnlp_loc)
     spacy_nlp = spacy.load('en_core_web_sm')
     spacy_nlp.add_pipe(LanguageDetector(), name="language_detector", last=True)
@@ -180,7 +179,7 @@ def main():
                         else:
                             keyword = input("Enter the Keyword: ")
                             file_upload = easygui.fileopenbox()
-                            data_tw_post = pd.read_csv(file_upload)
+                            data_tw_post = pd.read_csv(file_upload, encoding='cp1252')
                     except Exception as e:
                         print("\n Scraping output file is not available at the mentioned path")
                         logger.error("Exception: {}".format(e))
@@ -320,9 +319,9 @@ def main():
                     pages = input("Enter the no. of Pages: ")
                     logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
                     data_fb, keyword = fbscraper.fb_scraper(keyword, pages)
-
                     data_fb_post = pd.DataFrame(data_fb)
                     data_fb_post['keyword'] = keyword
+                    data_fb_post = data_fb_post.dropna(subset=['post_url'], axis=0).reset_index()
 
                     if all(data_fb_post['post_url'].isna()):
                         fb_reviews = copy.deepcopy(data_fb_post)
@@ -515,11 +514,18 @@ def main():
                 keyword = input("Enter the Keyword: ")
                 if scrape in [1]:
                     logger.info("---------------- Scrapping is Initiated. Please wait...!!! ----------------")
-                    review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
+                    rev_lnk_scrp = int(input("\nDo you want to upload the review links externally  0/1: "))
+                    checkInputStatus(rev_lnk_scrp)
+                    if rev_lnk_scrp in [1]:
+                        review_link_df = pd.read_csv(config['PATHS']['BASEDIR'] + "\\common_files\\review_link.csv",
                                              error_bad_lines=False)
+                    else:
+                        logger.info("---------------- Review link extraction is Initiated. Please wait...!!! ----------------")
+                        review_link_df1 = amzreviewlinkscrapper.getreview_link(keyword)
+                        logger.info("---------------- Review link extraction is completed. ----------------")
+                        review_link_df = review_link_df1.rename(columns = {"review_links":"Review_Link_Href","total_review_count":"Review_Count","product_name":"Name"})
                     review_link_df = review_link_df.drop_duplicates(subset='Review_Link_Href')
                     review_link_df = review_link_df.dropna(subset=['Review_Link_Href'], axis=0)
-
                     review_link_df['linkset'] = review_link_df.apply(amzscraper.create_linkset, axis=1)
                     review_link_df['linkset2'] = review_link_df['linkset'].apply(lambda x: '|'.join(x))
                     all_links_df = review_link_df['linkset2'].str.split("|", expand=True)
@@ -527,8 +533,7 @@ def main():
                     logger.info("Total no. of Review-Links Scraped: {}".format(len(all_links_df)))
                     review_link_df = pd.concat([review_link_df, all_links_df], axis=1)
                     review_link_df = pd.melt(review_link_df,
-                                         id_vars=['web-scraper-order', 'web-scraper-start-url', 'Name', 'Review_Link_Href',
-                                                  'Review_Count', 'linkset', 'linkset2'],
+                                         id_vars=['Name', 'Review_Link_Href','Review_Count', 'linkset', 'linkset2'],
                                          value_vars=list(range(0, total_number_of_pages)), value_name='Final_link')
                     review_link_df = review_link_df.sort_values(by=['Review_Link_Href', 'variable'], ascending=[True, True])
                     review_link_df1 = review_link_df[review_link_df['Final_link'].isna() == False]
